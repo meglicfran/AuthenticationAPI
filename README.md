@@ -1,2 +1,2 @@
 # AuthenticationAPI
-Authentication API using Node.js and MongoDB
+Authentication API using Node.js, MongoDB and JWT
