@@ -10,7 +10,7 @@ dotenv.config();
 mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => {
   console.log("connected to DB.");
 });
-//ttransform request in javascript objects
+//transform a request into a  javascript object
 app.use(express.json());
 
 //localhost:3000/api/user/*
