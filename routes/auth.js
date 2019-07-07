@@ -3,6 +3,7 @@ const User = require("../model/User");
 const bcrypt = require("bcryptjs");
 const { registerValidation } = require("../validation");
 const { loginValidation } = require("../validation");
+const jwt = require("jsonwebtoken");
 
 router.post("/register", async (req, res) => {
   const vali = registerValidation(req.body);
@@ -45,17 +46,17 @@ router.post("/login", async (req, res) => {
   }
   const user = await User.findOne({ username: req.body.username });
   if (!user) {
-    res.send("Email is incorrect");
+    res.send("Username is incorrect");
     return;
   }
-  console.log(`${req.body.password}\n`);
-  console.log(user.password);
+
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if (!validPass) {
     res.send("Password is incorrect");
     return;
   }
-  res.send("Success");
+  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+  res.header("auth-token", token).send(token);
 });
 
 module.exports = router;
